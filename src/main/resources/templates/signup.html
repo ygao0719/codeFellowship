@@ -6,13 +6,13 @@
 </head>
 <body>
 <h2>Sign up</h2>
-<form method="POST" action="/signup" th:object="${user}">
-    <lable for="username"> username:</lable><input th:field="*{username}" /><br />
-    <lable for="password"> password:</lable><input th:field="*{password}"/><br />
-    <lable for="firstName"> firstName:</lable><input th:field="*{firstName}" /><br />
-    <lable for="lastName"> lastName:</lable><input th:field="*{lastName}" /><br />
-    <lable for="dataOfBirth"> date of birth:</lable><input th:field="*{dateOfBirth}"/><br />
-    <lable for="bio"> bio:</lable><input th:field="*{bio}"/><br />
+<form method="POST" action="/signup" >
+    <lable for="username"> username:</lable><input th:name="username" type="text" /><br />
+    <lable for="password"> password:</lable><input th:name="password" type="text"/><br />
+    <lable for="firstName"> firstName:</lable><input th:name="firstName" type="text"/><br />
+    <lable for="lastName"> lastName:</lable><input th:name="lastName" type="text"/><br />
+    <lable for="dataOfBirth"> date of birth:</lable><input th:name="dateOfBirth" type="date"/><br />
+    <lable for="bio"> bio:</lable><input th:name="bio" type="text"/><br />
 
     <input type="submit" />
 </form>

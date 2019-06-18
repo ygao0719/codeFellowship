@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -20,12 +21,12 @@ public class ApplicationUser implements UserDetails {
     String password;
     String firstName;
     String lastName;
-    LocalDate dateOfBirth;
+    Date dateOfBirth;
     String bio;
 
     public ApplicationUser(){}
 
-    public ApplicationUser(String username,String password,String firstName,String lastName,LocalDate dateOfBirth,String bio ){
+    public ApplicationUser(String username,String password,String firstName,String lastName,Date dateOfBirth,String bio ){
 
         this.username = username;
         this.password = password;
