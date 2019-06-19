@@ -7,12 +7,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,18 +31,35 @@ public class ApplicationUserController {
 
 
     @PostMapping("/signup")
-    public RedirectView createUser(String username, String password, String firstName, String lastName, Date dateOfBirth, String bio ){
+    public String createUser(String username, String password, String firstName, String lastName, Date dateOfBirth, String bio ){
         ApplicationUser newUser = new ApplicationUser(username, bCryptPasswordEncoder.encode(password),firstName,lastName,dateOfBirth,bio);
         applicationUserRepository.save(newUser);
 
-
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
+        long id = user.getId();
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new RedirectView("/signup");
+
+        return "redirect:/users/" + id;
+    }
+
+    @GetMapping("/users/{id}")
+    public String getProfile(@PathVariable Long id, Model m){
+        ApplicationUser user = applicationUserRepository.findById(id).get();
+        m.addAttribute("user",user);
+        return "myProfile";
+    }
+
+    @GetMapping("/welcome")
+    public String getProfile(Principal p, Model m){
+        m.addAttribute("principal",p);
+        return "welcome";
     }
 
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";
     }
+
+
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<img src="https://www.w3schools.com/howto/img_snow.jpg" height="150" width="160" />
+
+<ul>
+    First Name: <li th:text="${user.firstName}"></li>
+    Last Name: <li th:text="${user.lastName}"></li>
+    Date of birth: <li th:text="${user.dateOfBirth}"></li>
+    Bio: <li th:text="${user.bio}"></li>
+
+</ul>
+<a th:href="@{'/logout'}" methods="POST">Logout</a>
+</body>
+</html>

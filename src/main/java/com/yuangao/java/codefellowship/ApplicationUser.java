@@ -3,10 +3,7 @@ package com.yuangao.java.codefellowship;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -17,6 +14,7 @@ public class ApplicationUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
+    @Column(unique = true)
     String username;
     String password;
     String firstName;
@@ -36,6 +34,53 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
+    public Long getId(){
+        return this.id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth(){
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth){
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getBio(){
+        return this.bio;
+    }
+
+    public void setBio(String bio){
+        this.bio = bio;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
