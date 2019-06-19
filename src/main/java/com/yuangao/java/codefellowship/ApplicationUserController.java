@@ -53,6 +53,8 @@ public class ApplicationUserController {
     @GetMapping("/welcome")
     public String getProfile(Principal p, Model m){
         m.addAttribute("principal",p);
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
+        m.addAttribute("currentUser",currentUser);
         return "welcome";
     }
 
