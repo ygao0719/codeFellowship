@@ -5,6 +5,8 @@
     <title>welcome</title>
 </head>
 <body>
-<h3> Welcome, <span th:text="${principal.name}"></span>!</h3>
+<h3> Welcome back, <span th:text="${principal.name}"></span>!</h3>
+<a th:href="@{'/logout'}" methods="POST">Logout</a>
+<a th:href="@{'/users/' + ${currentUser.id} }" >My profile</a>
 </body>
 </html>
