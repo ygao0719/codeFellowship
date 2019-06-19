@@ -7,6 +7,7 @@ import com.yuangao.java.codefellowship.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,14 +42,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 //allow requests to all URLs even if not logged in
-                    .antMatchers("/","/users/*","/login","/signup","/welcome").permitAll()
+                .antMatchers(HttpMethod.GET,"/*.css").permitAll()
+
+                .antMatchers("/","/users/*","/login","/signup","/welcome").permitAll()
+
                 //anything else you must be logged in
                     .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/welcome")
+                    .defaultSuccessUrl("/myprofile")
 //                    .failureUrl("/login?error=true")
                 .and()
                 .logout()

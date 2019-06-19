@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Controller
@@ -20,6 +20,9 @@ public class ApplicationUserController {
 
     @Autowired
     ApplicationUserRepository applicationUserRepository;
+
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
     PasswordEncoder bCryptPasswordEncoder;
@@ -47,17 +50,34 @@ public class ApplicationUserController {
     public String getProfile(@PathVariable Long id, Model m){
         ApplicationUser user = applicationUserRepository.findById(id).get();
         m.addAttribute("user",user);
-        return "myProfile";
+        return "myprofile";
     }
 
     @GetMapping("/welcome")
-    public String getProfile(Principal p, Model m){
+    public String getWelcome(Principal p, Model m){
         m.addAttribute("principal",p);
+
         ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
         m.addAttribute("currentUser",currentUser);
         return "welcome";
     }
 
+    @PostMapping("/welcome")
+    public RedirectView sendPost(Principal p, @RequestParam String body, Model m){
+        ApplicationUser user = applicationUserRepository.findByUsername(p.getName());
+
+        Post post = new Post(user,body,new Timestamp(System.currentTimeMillis()));
+        postRepository.save(post);
+
+        return new RedirectView("/myprofile");
+    }
+
+    @GetMapping("/myprofile")
+    public String getProfile(Principal p, Model m){
+        ApplicationUser user = applicationUserRepository.findByUsername(p.getName());
+        m.addAttribute("user",user);
+        return "myprofile";
+    }
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";

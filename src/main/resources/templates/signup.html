@@ -5,6 +5,9 @@
     <title>sign up</title>
 </head>
 <body>
+
+<div th:replace="fragments/header::potato"/>
+
 <h2>Sign up</h2>
 <form method="POST" action="/signup" >
     <lable for="username"> username:</lable><input th:name="username" type="text" /><br />

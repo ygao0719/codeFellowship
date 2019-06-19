@@ -5,8 +5,18 @@
     <title>welcome</title>
 </head>
 <body>
-<h3> Welcome back, <span th:text="${principal.name}"></span>!</h3>
-<a th:href="@{'/logout'}" methods="POST">Logout</a>
-<a th:href="@{'/users/' + ${currentUser.id} }" >My profile</a>
+<div th:replace="fragments/header::potato"/>
+
+<h3> Welcome back, <span th:text="${principal.getName()}"></span>!</h3>
+
+<form method="POST" action="/welcome">
+    Post Body: <input name="body" type="text" /><br />
+    <input type="submit" />
+
+</form>
+
+<h4><a th:href="@{'/users/' + ${currentUser.id} }">My profile</a></h4>
+
+<!--<h4><a th:href="@{'/logout'}" methods="POST">Logout</a></h4>-->
 </body>
 </html>

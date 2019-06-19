@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -22,6 +23,9 @@ public class ApplicationUser implements UserDetails {
     Date dateOfBirth;
     String bio;
 
+    @OneToMany(mappedBy = "applicationUser")
+    List<Post> posts;
+
     public ApplicationUser(){}
 
     public ApplicationUser(String username,String password,String firstName,String lastName,Date dateOfBirth,String bio ){
@@ -34,6 +38,9 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
+    public List<Post> getPosts(){
+        return this.posts;
+    }
     public Long getId(){
         return this.id;
     }

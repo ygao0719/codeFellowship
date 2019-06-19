@@ -5,6 +5,9 @@
     <title>Profile</title>
 </head>
 <body>
+
+<div th:replace="fragments/header::potato"/>
+
 <img src="https://www.w3schools.com/howto/img_snow.jpg" height="150" width="160" />
 
 <ul>
@@ -12,8 +15,16 @@
     Last Name: <li th:text="${user.lastName}"></li>
     Date of birth: <li th:text="${user.dateOfBirth}"></li>
     Bio: <li th:text="${user.bio}"></li>
-
 </ul>
-<a th:href="@{'/logout'}" methods="POST">Logout</a>
+
+<h2>All posts of this user</h2>
+<ul>
+    <li th:each="post:${user.posts}">
+        <span th:text="${post.body}" />
+        <span th:text="${post.createdAt}"/>
+    </li>
+</ul>
+
+<!--<a th:href="@{'/welcome'}" methods="GET">Welcome</a>-->
 </body>
 </html>
