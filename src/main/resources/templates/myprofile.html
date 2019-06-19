@@ -12,8 +12,17 @@
     Last Name: <li th:text="${user.lastName}"></li>
     Date of birth: <li th:text="${user.dateOfBirth}"></li>
     Bio: <li th:text="${user.bio}"></li>
-
 </ul>
-<a th:href="@{'/logout'}" methods="POST">Logout</a>
+
+<h2>All posts of this user</h2>
+<ul>
+    <li th:each="post:${user.posts}">
+        <span th:text="${post.body}" />
+        <span th:text="${post.createdAt}"/>
+    </li>
+</ul>
+
+<a th:href="@{'/logout'}" methods="POST">Logout</a><br />
+<a th:href="@{'/welcome'}" methods="GET">Welcome</a>
 </body>
 </html>
