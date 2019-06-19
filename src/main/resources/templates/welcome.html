@@ -5,6 +5,8 @@
     <title>welcome</title>
 </head>
 <body>
+<div th:replace="fragments/header::potato"/>
+
 <h3> Welcome back, <span th:text="${principal.getName()}"></span>!</h3>
 
 <form method="POST" action="/welcome">
@@ -13,8 +15,8 @@
 
 </form>
 
-<h4><a th:href="@{'/users/' + ${currentUser.id} }" >My profile</a></h4>
+<h4><a th:href="@{'/users/' + ${currentUser.id} }">My profile</a></h4>
 
-<h4><a th:href="@{'/logout'}" methods="POST">Logout</a></h4>
+<!--<h4><a th:href="@{'/logout'}" methods="POST">Logout</a></h4>-->
 </body>
 </html>
