@@ -5,23 +5,27 @@
     <title>Folowees</title>
 </head>
 <body>
-<div th:replace="fragments/header::header"/>
-<span><a th:href="@{'/users/' + ${loginUser.id} }">My profile</a></span>
 
-<h3> Welcome back, <span th:text="${loginUser.firstName}"></span>!</h3>
-<h3>All of your followees are here</h3>
-<ul>
-    <li th:each="followee:${followees}">
-        <span th:text="${followee.firstName}"></span>
-        <span th:text="${followee.lastName}"></span>
+    <div th:replace="fragments/header::header"/>
+    <span><a th:href="@{'/users/' + ${loginUser.id} }">My profile</a></span>
+
+    <h3> Welcome back, <span th:text="${loginUser.firstName}"></span>!</h3>
+    <h3>All of your followees are here</h3>
+
     <ul>
-        <li th:each="post:${followee.posts}">
-        <span th:text="${post.body}" />
-        <span th:text="${post.createdAt}"/>
+        <li th:each="followee:${followees}"><a th:href="@{'/users/' + ${followee.id}}" >
+
+            <span th:text="${followee.firstName}"></span><span th:text="${followee.lastName}"></span></a>
+
+            <ul>
+                <li th:each="post:${followee.posts}" >
+                    <span th:text="${post.body}" />
+                    <span th:text="${post.createdAt}"/>
+                </li>
+            </ul>
+
         </li>
     </ul>
-    </li>
-</ul>
 
 </body>
 </html>
