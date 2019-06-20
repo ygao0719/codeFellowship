@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
@@ -40,6 +41,7 @@ public class ApplicationUserController {
 
         ApplicationUser user = applicationUserRepository.findByUsername(username);
         long id = user.getId();
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -59,6 +61,15 @@ public class ApplicationUserController {
 
         ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
         m.addAttribute("currentUser",currentUser);
+
+        //get all the user and get rid of the current user, so I get all the potential friends
+        Iterable<ApplicationUser> allUsers = applicationUserRepository.findAll();
+        List<ApplicationUser> potentialFriends = new ArrayList<>();
+        allUsers.forEach(potentialFriends::add);
+        potentialFriends.remove(currentUser);
+
+        m.addAttribute("potentialFriends", potentialFriends);
+
         return "welcome";
     }
 
@@ -78,6 +89,7 @@ public class ApplicationUserController {
         m.addAttribute("user",user);
         return "myprofile";
     }
+
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";

@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -26,6 +27,9 @@ public class ApplicationUser implements UserDetails {
     @OneToMany(mappedBy = "applicationUser")
     List<Post> posts;
 
+    @ManyToMany
+    Set<ApplicationUser> followees;
+
     public ApplicationUser(){}
 
     public ApplicationUser(String username,String password,String firstName,String lastName,Date dateOfBirth,String bio ){
@@ -36,6 +40,14 @@ public class ApplicationUser implements UserDetails {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
+    }
+
+    public Set<ApplicationUser> getFollowees(){
+        return this.followees;
+    }
+
+    public void setFollowees(Set<ApplicationUser> followees){
+        this.followees = followees;
     }
 
     public List<Post> getPosts(){
