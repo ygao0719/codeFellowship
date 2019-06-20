@@ -9,6 +9,7 @@
 <body>
 
 <div th:replace="fragments/header::header"/>
+<div><a th:href="@{'/users/' + ${user.id} + '/followees' }">My followees</a></div>
 
 <img src="https://www.w3schools.com/howto/img_snow.jpg" height="150" width="160" />
 

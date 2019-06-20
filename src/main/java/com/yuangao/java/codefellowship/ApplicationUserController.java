@@ -56,13 +56,14 @@ public class ApplicationUserController {
     }
 
     @PostMapping("/users/{id}/followees")
-    public RedirectView postFollowee(@PathVariable Long id, Principal p, Model m){
+    public String postFollowee(@PathVariable Long id, Principal p, Model m){
         ApplicationUser loginUser = applicationUserRepository.findByUsername(p.getName());
         ApplicationUser newFollowee = applicationUserRepository.findById(id).get();
 
         loginUser.followees.add(newFollowee);
         applicationUserRepository.save(loginUser);
-        return new RedirectView("/users/{id}/followees");
+        Long loginUserId = loginUser.id;
+        return "redirect:/users/" + loginUserId + "/followees";
     }
 
     @GetMapping("/users/{id}/followees")
@@ -72,6 +73,7 @@ public class ApplicationUserController {
         Iterable<ApplicationUser> followees = loginUser.followees;
 
         m.addAttribute("followees",followees);
+        m.addAttribute("loginUser",loginUser);
 
         return "followees";
     }

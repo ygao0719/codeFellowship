@@ -9,6 +9,7 @@
 <body>
 <div th:replace="fragments/header::header"/>
 <span><a th:href="@{'/users/' + ${currentUser.id} }">My profile</a></span>
+<span><a th:href="@{'/users/' + ${currentUser.id} + '/followees' }">My followees</a></span>
 
 
 <h3> Welcome back, <span th:text="${currentUser.firstName}"></span>!</h3>
