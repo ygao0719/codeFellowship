@@ -14,6 +14,7 @@ import java.security.Principal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
@@ -40,6 +41,7 @@ public class ApplicationUserController {
 
         ApplicationUser user = applicationUserRepository.findByUsername(username);
         long id = user.getId();
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -53,12 +55,47 @@ public class ApplicationUserController {
         return "myprofile";
     }
 
+    @PostMapping("/users/{id}/followees")
+    public String postFollowee(@PathVariable Long id, Principal p, Model m){
+        ApplicationUser loginUser = applicationUserRepository.findByUsername(p.getName());
+        ApplicationUser newFollowee = applicationUserRepository.findById(id).get();
+
+        loginUser.followees.add(newFollowee);
+        applicationUserRepository.save(loginUser);
+        Long loginUserId = loginUser.id;
+        return "redirect:/users/" + loginUserId + "/followees";
+    }
+
+    @GetMapping("/users/{id}/followees")
+    public String getFollowees(@PathVariable Long id, Model m){
+
+        ApplicationUser loginUser = applicationUserRepository.findById(id).get();
+        Iterable<ApplicationUser> followees = loginUser.followees;
+
+        m.addAttribute("followees",followees);
+        m.addAttribute("loginUser",loginUser);
+
+        return "followees";
+    }
+
+
     @GetMapping("/welcome")
     public String getWelcome(Principal p, Model m){
         m.addAttribute("principal",p);
 
         ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
         m.addAttribute("currentUser",currentUser);
+
+        //get all the user and get rid of the current user, so I get all the potential friends
+        Iterable<ApplicationUser> allUsers = applicationUserRepository.findAll();
+        List<ApplicationUser> potentialFriends = new ArrayList<>();
+        allUsers.forEach(potentialFriends::add);
+        potentialFriends.remove(currentUser);
+        //removeAll is important, remove doesn't work.
+        potentialFriends.removeAll(currentUser.followees);
+
+        m.addAttribute("potentialFriends", potentialFriends);
+
         return "welcome";
     }
 
@@ -78,6 +115,7 @@ public class ApplicationUserController {
         m.addAttribute("user",user);
         return "myprofile";
     }
+
     @GetMapping("/login")
     public String getLoginPage(){
         return "login";

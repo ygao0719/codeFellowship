@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<div th:replace="fragments/header::potato"/>
+<div th:replace="fragments/header::header"/>
+<div><a th:href="@{'/users/' + ${user.id} + '/followees' }">My followees</a></div>
 
 <img src="https://www.w3schools.com/howto/img_snow.jpg" height="150" width="160" />
 
@@ -19,7 +20,7 @@
     Bio: <li th:text="${user.bio}"></li>
 </ul>
 
-<h2>All posts of this user</h2>
+<h2>All posts of <span th:text="${user.firstName}" /></h2>
 <ul>
     <li th:each="post:${user.posts}">
         <span th:text="${post.body}" />
@@ -27,6 +28,9 @@
     </li>
 </ul>
 
-<!--<a th:href="@{'/welcome'}" methods="GET">Welcome</a>-->
+<form method="POST" th:action="@{'/users/' + ${user.id} + '/followees'}">
+    <button type="submit" >Follow</button>
+</form>
+
 </body>
 </html>

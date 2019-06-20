@@ -7,18 +7,28 @@
 
 </head>
 <body>
-<div th:replace="fragments/header::potato"/>
+<div th:replace="fragments/header::header"/>
+<span><a th:href="@{'/users/' + ${currentUser.id} }">My profile</a></span>
+<span><a th:href="@{'/users/' + ${currentUser.id} + '/followees' }">My followees</a></span>
 
-<h3> Welcome back, <span th:text="${principal.getName()}"></span>!</h3>
+
+<h3> Welcome back, <span th:text="${currentUser.firstName}"></span>!</h3>
 
 <form method="POST" action="/welcome">
     Post Body: <input name="body" type="text" /><br />
     <input type="submit" />
-
 </form>
 
-<h4><a th:href="@{'/users/' + ${currentUser.id} }">My profile</a></h4>
+<h3> Check these friends around you.</h3>
+<ul>
+    <li th:each="potentialFriend: ${potentialFriends}" >
+        <a th:href="'/users/' + ${potentialFriend.id}">
+            <span th:text="${potentialFriend.firstName}"/>
+            <span th:text="${potentialFriend.lastName}"/>
+        </a>
+    </li>
 
-<!--<h4><a th:href="@{'/logout'}" methods="POST">Logout</a></h4>-->
+</ul>
+
 </body>
 </html>
