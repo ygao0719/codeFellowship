@@ -55,6 +55,28 @@ public class ApplicationUserController {
         return "myprofile";
     }
 
+    @PostMapping("/users/{id}/followees")
+    public RedirectView postFollowee(@PathVariable Long id, Principal p, Model m){
+        ApplicationUser loginUser = applicationUserRepository.findByUsername(p.getName());
+        ApplicationUser newFollowee = applicationUserRepository.findById(id).get();
+
+        loginUser.followees.add(newFollowee);
+        applicationUserRepository.save(loginUser);
+        return new RedirectView("/users/{id}/followees");
+    }
+
+    @GetMapping("/users/{id}/followees")
+    public String getFollowees(@PathVariable Long id, Model m){
+
+        ApplicationUser loginUser = applicationUserRepository.findById(id).get();
+        Iterable<ApplicationUser> followees = loginUser.followees;
+
+        m.addAttribute("followees",followees);
+
+        return "followees";
+    }
+
+
     @GetMapping("/welcome")
     public String getWelcome(Principal p, Model m){
         m.addAttribute("principal",p);
@@ -67,6 +89,8 @@ public class ApplicationUserController {
         List<ApplicationUser> potentialFriends = new ArrayList<>();
         allUsers.forEach(potentialFriends::add);
         potentialFriends.remove(currentUser);
+        //removeAll is important, remove doesn't work.
+        potentialFriends.removeAll(currentUser.followees);
 
         m.addAttribute("potentialFriends", potentialFriends);
 
