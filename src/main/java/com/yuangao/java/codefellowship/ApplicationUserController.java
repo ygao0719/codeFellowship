@@ -90,6 +90,7 @@ public class ApplicationUserController {
         Iterable<ApplicationUser> allUsers = applicationUserRepository.findAll();
         List<ApplicationUser> potentialFriends = new ArrayList<>();
         allUsers.forEach(potentialFriends::add);
+
         potentialFriends.remove(currentUser);
         //removeAll is important, remove doesn't work.
         potentialFriends.removeAll(currentUser.followees);
