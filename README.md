@@ -20,3 +20,5 @@ of their followed users have posted recently.
   - checkout people's profile around you
   - follow friends around you.
 
+### Deployed to AWS Elastic Beastalk
+URL: Codefellowship-env.7bmxnypfx9.us-west-2.elasticbeanstalk.com 
