@@ -26,9 +26,20 @@ public class CodefellowshipApplicationTests {
 		MockitoAnnotations.initMocks(this);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(applicationUserController).build();
 	}
+
+	@Test
+	public void test_homePage() throws Exception {
+		this.mockMvc.perform(get("/")).andExpect(status().isOk());
+	}
+
 	@Test
 	public void test_userSignup() throws Exception {
 		this.mockMvc.perform(get("/signup")).andExpect(status().isOk());
+	}
+
+	@Test
+	public void test_userLogin() throws Exception {
+		this.mockMvc.perform(get("/login")).andExpect(status().isOk());
 	}
 
 }
