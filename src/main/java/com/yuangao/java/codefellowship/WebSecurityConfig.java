@@ -44,10 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //allow requests to all URLs even if not logged in
                 .antMatchers(HttpMethod.GET,"/*.css").permitAll()
 
-                .antMatchers("/","/users/*","/login","/signup","/welcome").permitAll()
+                .antMatchers("/","/login","/signup","/welcome").permitAll()
 
                 //anything else you must be logged in
-                    .anyRequest().authenticated()
+                .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
